@@ -5,6 +5,7 @@ import json
 import math
 from pathlib import Path
 import re
+import sys
 
 
 def tokenize(text):
@@ -39,6 +40,8 @@ class SearchIndex:
 
 
 def load_documents(folder):
+    if not Path(folder).is_dir():
+        raise ValueError('docs must point to an existing directory')
     documents = []
     for path in sorted(Path(folder).glob('runbook-*.md')):
         for number, paragraph in enumerate(path.read_text(encoding='utf-8').split('\n\n'), 1):
@@ -68,13 +71,18 @@ def main():
     parser.add_argument('--docs', default='.')
     parser.add_argument('--evaluate', metavar='JSON_FILE')
     args = parser.parse_args()
-    index = SearchIndex(load_documents(args.docs))
-    if args.evaluate:
-        output = evaluate(index, json.loads(Path(args.evaluate).read_text()))
-    else:
-        output = index.search(args.query)
+    try:
+        index = SearchIndex(load_documents(args.docs))
+        if args.evaluate:
+            output = evaluate(index, json.loads(Path(args.evaluate).read_text()))
+        else:
+            output = index.search(args.query)
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        print(json.dumps({'error': str(error)}), file=sys.stderr)
+        return 2
     print(json.dumps(output, indent=2))
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

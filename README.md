@@ -14,6 +14,8 @@ python3 search.py --evaluate evaluation.json
 python3 -m unittest -v
 ```
 
+A nonexistent document directory is rejected with exit status 2 and a JSON error on stderr. An existing empty directory is valid and returns no results.
+
 The first query returns the memory-pressure runbook. An unknown term returns an empty list rather than an invented answer.
 
 ## How it works
