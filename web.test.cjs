@@ -1,0 +1,18 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const {SearchIndex, tokenize} = require('./web.js');
+const documents = JSON.parse(fs.readFileSync(path.join(__dirname, 'runbooks.json'), 'utf8'));
+const index = new SearchIndex(documents);
+assert.deepEqual(tokenize('OOMKilled: memory!'), ['oomkilled', 'memory']);
+assert.ok(index.search('OOMKilled memory')[0].source.startsWith('runbook-memory.md'));
+assert.deepEqual(index.search('unknownzzzz'), []);
+assert.deepEqual(index.search(''), []);
+assert.deepEqual(new SearchIndex([]).search('memory'), []);
+assert.throws(() => index.search('memory', 0), RangeError);
+assert.throws(() => index.search('memory', 1.5), RangeError);
+const tied = new SearchIndex([{source:'b',text:'same'},{source:'a',text:'same'}]);
+assert.equal(tied.search('same')[0].source, 'a');
+const golden = JSON.parse(fs.readFileSync(path.join(__dirname, 'browser-parity.json'), 'utf8'));
+for (const item of golden) assert.deepEqual(index.search(item.query), item.results);
+console.log(`8 browser retrieval assertions and ${golden.length} Python/JavaScript parity cases passed.`);

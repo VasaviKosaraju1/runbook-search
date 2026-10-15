@@ -1,10 +1,17 @@
 # Validation
 
-Local validation on Python 3.9.6.
-
-## Unit tests
+## Python and HTTP tests
 
 ```text
+test_blank_query_rejected (test_app.HttpTests) ... ok
+test_dataset_is_generated_from_repository_fixtures (test_app.HttpTests) ... ok
+test_demo_html (test_app.HttpTests) ... ok
+test_health (test_app.HttpTests) ... ok
+test_invalid_limits (test_app.HttpTests) ... ok
+test_long_query_rejected (test_app.HttpTests) ... ok
+test_no_match_is_successful_empty_result (test_app.HttpTests) ... ok
+test_private_paths_not_served (test_app.HttpTests) ... ok
+test_search_returns_source (test_app.HttpTests) ... ok
 test_empty_directory_is_valid (test_search.SearchTests) ... ok
 test_empty_evaluation_rejected (test_search.SearchTests) ... ok
 test_empty_index (test_search.SearchTests) ... ok
@@ -18,40 +25,19 @@ test_tie_breaking_is_deterministic (test_search.SearchTests) ... ok
 test_unknown_query_has_no_results (test_search.SearchTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 11 tests in 0.005s
+Ran 20 tests in 0.551s
 
 OK
 ```
 
-## python3 search.py OOMKilled memory limit
+## Browser retrieval tests
 
-Exit status: 0
-
-```json
-[
-  {
-    "source": "runbook-memory.md#chunk-2",
-    "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
-    "score": 3.581044
-  },
-  {
-    "source": "runbook-memory.md#chunk-1",
-    "text": "# Container memory pressure",
-    "score": 1.547627
-  }
-]
+```text
+8 browser retrieval assertions and 6 Python/JavaScript parity cases passed.
 ```
 
-## python3 search.py --evaluate evaluation.json
+## Browser checks
 
-Exit status: 0
+The local interface loaded six chunks from three synthetic runbooks. The Memory pressure example returned the runbook-memory.md source and its passage. An unmatched query returned the no-matching-passages message with no result cards.
 
-```json
-{
-  "queries": 6,
-  "hit_rate_at_3": 1.0,
-  "mean_reciprocal_rank_at_3": 1.0
-}
-```
-
-These checks use small synthetic fixtures. They do not establish production readiness or cloud deployment results.
+The local API tests make real HTTP requests on an ephemeral loopback port. The static UI is tested separately; the public Pages deployment does not run the Python API. Scores and results are fixture checks, not evidence of production retrieval quality.

@@ -1,0 +1,26 @@
+[
+  {
+    "source": "runbook-database.md#chunk-1",
+    "text": "# Database connection exhaustion"
+  },
+  {
+    "source": "runbook-database.md#chunk-2",
+    "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas."
+  },
+  {
+    "source": "runbook-memory.md#chunk-1",
+    "text": "# Container memory pressure"
+  },
+  {
+    "source": "runbook-memory.md#chunk-2",
+    "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage."
+  },
+  {
+    "source": "runbook-rollback.md#chunk-1",
+    "text": "# Deployment rollback"
+  },
+  {
+    "source": "runbook-rollback.md#chunk-2",
+    "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic."
+  }
+]
