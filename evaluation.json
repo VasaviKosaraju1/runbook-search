@@ -1,0 +1,26 @@
+[
+  {
+    "query": "deployment rollback healthy revision",
+    "expected_source": "runbook-rollback.md"
+  },
+  {
+    "query": "OOMKilled memory limit",
+    "expected_source": "runbook-memory.md"
+  },
+  {
+    "query": "connection pool exhausted",
+    "expected_source": "runbook-database.md"
+  },
+  {
+    "query": "long running queries",
+    "expected_source": "runbook-database.md"
+  },
+  {
+    "query": "pause rollout error rates",
+    "expected_source": "runbook-rollback.md"
+  },
+  {
+    "query": "container leaks peak usage",
+    "expected_source": "runbook-memory.md"
+  }
+]
