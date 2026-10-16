@@ -20,3 +20,32 @@ jobs:
       - run: python -m unittest -v
       - run: node web.test.cjs
       - run: git diff --exit-code -- runbooks.json
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build container
+        run: docker build -t runbook-search:test .
+      - name: Verify non-root runtime and read-only filesystem
+        run: |
+          test "$(docker run --rm --entrypoint id runbook-search:test -u)" = "10001"
+          docker run -d --name runbook-search --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m -p 127.0.0.1:8000:8000 runbook-search:test
+          python smoke_test.py http://127.0.0.1:8000
+      - name: Container logs
+        if: always()
+        run: docker logs runbook-search || true
+      - name: Remove test container
+        if: always()
+        run: docker rm -f runbook-search || true
+  infrastructure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Azure infrastructure without deploying
+        run: |
+          az bicep install
+          az bicep build --file main.bicep --outfile /tmp/main.json
+          az bicep build --file registry.bicep --outfile /tmp/registry.json
