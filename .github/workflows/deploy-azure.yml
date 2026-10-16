@@ -1,0 +1,91 @@
+name: Deploy Azure lab
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: azure-lab-deploy
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: azure-lab
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+      REGISTRY: ${{ vars.AZURE_REGISTRY_NAME }}
+      PULL_IDENTITY: ${{ vars.AZURE_PULL_IDENTITY_ID }}
+      APP_NAME: runbook-search
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test release source
+        run: |
+          python build_demo.py
+          python -m unittest -v
+          node web.test.cjs
+          git diff --exit-code -- runbooks.json
+      - name: Check deployment configuration
+        run: |
+          test -n "$RESOURCE_GROUP" || { echo 'Missing AZURE_RESOURCE_GROUP'; exit 1; }
+          test -n "$REGISTRY" || { echo 'Missing AZURE_REGISTRY_NAME'; exit 1; }
+          test -n "$PULL_IDENTITY" || { echo 'Missing AZURE_PULL_IDENTITY_ID'; exit 1; }
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Build and test the release container
+        run: |
+          docker build -t runbook-search:release .
+          docker run -d --name release-test --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m -p 127.0.0.1:8000:8000 runbook-search:release
+          python smoke_test.py http://127.0.0.1:8000
+          docker rm -f release-test
+      - name: Push the tested image and resolve digest
+        id: image
+        run: |
+          az acr login --name "$REGISTRY"
+          SERVER=$(az acr show --name "$REGISTRY" --query loginServer -o tsv)
+          TAG="$SERVER/runbook-search:$GITHUB_SHA-$GITHUB_RUN_ID"
+          docker tag runbook-search:release "$TAG"
+          docker push "$TAG"
+          DIGEST=$(az acr repository show --name "$REGISTRY" --image "runbook-search:$GITHUB_SHA-$GITHUB_RUN_ID" --query digest -o tsv)
+          [[ "$DIGEST" =~ ^sha256:[a-f0-9]{64}$ ]] || exit 1
+          echo "reference=$SERVER/runbook-search@$DIGEST" >> "$GITHUB_OUTPUT"
+          echo "server=$SERVER" >> "$GITHUB_OUTPUT"
+      - name: Preview infrastructure changes
+        env:
+          IMAGE: ${{ steps.image.outputs.reference }}
+          SERVER: ${{ steps.image.outputs.server }}
+        run: |
+          az deployment group what-if --resource-group "$RESOURCE_GROUP" --template-file main.bicep --parameters image="$IMAGE" registryServer="$SERVER" pullIdentityId="$PULL_IDENTITY" appName="$APP_NAME"
+      - name: Deploy immutable image
+        id: deploy
+        env:
+          IMAGE: ${{ steps.image.outputs.reference }}
+          SERVER: ${{ steps.image.outputs.server }}
+        run: |
+          URL=$(az deployment group create --name "runbook-$GITHUB_RUN_ID" --resource-group "$RESOURCE_GROUP" --template-file main.bicep --parameters image="$IMAGE" registryServer="$SERVER" pullIdentityId="$PULL_IDENTITY" appName="$APP_NAME" --query properties.outputs.url.value -o tsv)
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+      - name: Check deployed service and write release record
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+          IMAGE: ${{ steps.image.outputs.reference }}
+        run: |
+          python smoke_test.py "$URL"
+          {
+            echo '### Azure lab release'
+            echo "Commit: $GITHUB_SHA"
+            echo "Image: $IMAGE"
+            echo "Service: $URL"
+            echo 'Readiness, API, metrics and private-path smoke checks passed.'
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -2,7 +2,9 @@
 
 [Try the live browser demo](https://vasavikosaraju1.github.io/runbook-search/) · [Source and tests](https://github.com/VasaviKosaraju1/runbook-search)
 
-Search operational notes through a local CLI, a browser demo, or a local HTTP API.
+Search operational notes through a local CLI, a browser demo, or a Python API.
+
+**DevOps deployment lab:** [container, Azure infrastructure, CI/CD, monitoring, rollback and cleanup](OPERATIONS.md). The static demo is live; Azure deployment is prepared but has not been provisioned in a subscription.
 
 This is a small, dependency-free retrieval baseline for Markdown runbooks. It ranks paragraph-sized chunks with BM25 and returns the source filename and chunk number alongside the text. It is useful for checking whether a document collection can answer common operational questions before adding embeddings or generated answers.
 
@@ -95,7 +97,7 @@ This is a small, manually authored challenge set over three synthetic runbooks. 
 - BM25 makes the baseline easy to inspect and run offline. It does not understand synonyms or infer meaning.
 - Source references identify local files and chunk numbers, not permanent line anchors. Editing a file can change chunk numbers.
 - The index is rebuilt in memory for each invocation. Large collections need persistence and incremental indexing.
-- There is no generative model or authentication. The browser demo is static, and the Python HTTP API is for local development. Neither should be used to publish private runbooks.
+- There is no generative model or authentication. The browser demo is static. `app.py` is for local development; `cloud_app.py` provides the separate Gunicorn container target. Neither should be used to publish private runbooks.
 - Sample runbooks are fictional learning fixtures. Check actual operational procedures before using them.
 
 ## Files worth reading
