@@ -71,5 +71,148 @@
   {
     "query": "",
     "results": []
+  },
+  {
+    "query": "How can I undo a release that increased errors?",
+    "results": [
+      {
+        "source": "runbook-rollback.md#chunk-2",
+        "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic.",
+        "score": 3.279657
+      }
+    ]
+  },
+  {
+    "query": "Which steps restore the last working version?",
+    "results": [
+      {
+        "source": "runbook-rollback.md#chunk-2",
+        "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic.",
+        "score": 2.425668
+      },
+      {
+        "source": "runbook-database.md#chunk-2",
+        "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+        "score": 1.150891
+      }
+    ]
+  },
+  {
+    "query": "What do I check when my pod gets terminated for using too much RAM?",
+    "results": [
+      {
+        "source": "runbook-memory.md#chunk-2",
+        "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+        "score": 1.999857
+      },
+      {
+        "source": "runbook-database.md#chunk-2",
+        "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+        "score": 1.925559
+      }
+    ]
+  },
+  {
+    "query": "How should I investigate an OOMKilled workload?",
+    "results": [
+      {
+        "source": "runbook-memory.md#chunk-2",
+        "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+        "score": 3.596023
+      }
+    ]
+  },
+  {
+    "query": "Why do database clients run out of available connections?",
+    "results": [
+      {
+        "source": "runbook-database.md#chunk-2",
+        "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+        "score": 1.925559
+      },
+      {
+        "source": "runbook-database.md#chunk-1",
+        "text": "# Database connection exhaustion",
+        "score": 1.547627
+      }
+    ]
+  },
+  {
+    "query": "How can I reduce application concurrency while queries are blocked?",
+    "results": [
+      {
+        "source": "runbook-database.md#chunk-2",
+        "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+        "score": 4.616566
+      }
+    ]
+  },
+  {
+    "query": "weather forecast tomorrow",
+    "results": []
+  },
+  {
+    "query": "recipe for chocolate cake",
+    "results": [
+      {
+        "source": "runbook-memory.md#chunk-2",
+        "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+        "score": 1.198674
+      }
+    ]
+  },
+  {
+    "query": "passport renewal appointment",
+    "results": []
+  },
+  {
+    "query": "How do I install a memory card in a camera?",
+    "results": [
+      {
+        "source": "runbook-memory.md#chunk-1",
+        "text": "# Container memory pressure",
+        "score": 1.547627
+      },
+      {
+        "source": "runbook-memory.md#chunk-2",
+        "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+        "score": 1.183695
+      },
+      {
+        "source": "runbook-rollback.md#chunk-2",
+        "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic.",
+        "score": 1.093219
+      }
+    ]
+  },
+  {
+    "query": "How do I release a song to streaming platforms?",
+    "results": [
+      {
+        "source": "runbook-rollback.md#chunk-2",
+        "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic.",
+        "score": 3.279657
+      }
+    ]
+  },
+  {
+    "query": "What database should I use for my new shopping application?",
+    "results": [
+      {
+        "source": "runbook-database.md#chunk-2",
+        "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+        "score": 1.925559
+      },
+      {
+        "source": "runbook-database.md#chunk-1",
+        "text": "# Database connection exhaustion",
+        "score": 1.547627
+      },
+      {
+        "source": "runbook-memory.md#chunk-2",
+        "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+        "score": 1.198674
+      }
+    ]
   }
 ]

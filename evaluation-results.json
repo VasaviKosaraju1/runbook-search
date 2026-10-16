@@ -1,0 +1,337 @@
+{
+  "overall": {
+    "queries": 18,
+    "relevant_queries": 12,
+    "irrelevant_queries": 6,
+    "hit_rate_at_3": 1.0,
+    "mean_reciprocal_rank_at_3": 1.0,
+    "irrelevant_query_false_positive_rate": 0.6666666666666666,
+    "correct_abstention_rate": 0.3333333333333333
+  },
+  "by_category": {
+    "baseline": {
+      "queries": 6,
+      "relevant_queries": 6,
+      "irrelevant_queries": 0,
+      "hit_rate_at_3": 1.0,
+      "mean_reciprocal_rank_at_3": 1.0,
+      "irrelevant_query_false_positive_rate": null,
+      "correct_abstention_rate": null
+    },
+    "irrelevant": {
+      "queries": 6,
+      "relevant_queries": 0,
+      "irrelevant_queries": 6,
+      "hit_rate_at_3": null,
+      "mean_reciprocal_rank_at_3": null,
+      "irrelevant_query_false_positive_rate": 0.6666666666666666,
+      "correct_abstention_rate": 0.3333333333333333
+    },
+    "paraphrase": {
+      "queries": 6,
+      "relevant_queries": 6,
+      "irrelevant_queries": 0,
+      "hit_rate_at_3": 1.0,
+      "mean_reciprocal_rank_at_3": 1.0,
+      "irrelevant_query_false_positive_rate": null,
+      "correct_abstention_rate": null
+    }
+  },
+  "per_query": [
+    {
+      "id": "baseline-1",
+      "category": "baseline",
+      "query": "deployment rollback healthy revision",
+      "expected_source": "runbook-rollback.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-rollback.md#chunk-1",
+          "text": "# Deployment rollback",
+          "score": 4.012617
+        },
+        {
+          "source": "runbook-rollback.md#chunk-2",
+          "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic.",
+          "score": 3.477077
+        }
+      ]
+    },
+    {
+      "id": "baseline-2",
+      "category": "baseline",
+      "query": "OOMKilled memory limit",
+      "expected_source": "runbook-memory.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-memory.md#chunk-2",
+          "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+          "score": 3.581044
+        },
+        {
+          "source": "runbook-memory.md#chunk-1",
+          "text": "# Container memory pressure",
+          "score": 1.547627
+        }
+      ]
+    },
+    {
+      "id": "baseline-3",
+      "category": "baseline",
+      "query": "connection pool exhausted",
+      "expected_source": "runbook-database.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-database.md#chunk-2",
+          "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+          "score": 4.026916
+        },
+        {
+          "source": "runbook-database.md#chunk-1",
+          "text": "# Database connection exhaustion",
+          "score": 1.547627
+        }
+      ]
+    },
+    {
+      "id": "baseline-4",
+      "category": "baseline",
+      "query": "long running queries",
+      "expected_source": "runbook-database.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-database.md#chunk-2",
+          "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+          "score": 3.462424
+        }
+      ]
+    },
+    {
+      "id": "baseline-5",
+      "category": "baseline",
+      "query": "pause rollout error rates",
+      "expected_source": "runbook-rollback.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-rollback.md#chunk-2",
+          "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic.",
+          "score": 5.492759
+        }
+      ]
+    },
+    {
+      "id": "baseline-6",
+      "category": "baseline",
+      "query": "container leaks peak usage",
+      "expected_source": "runbook-memory.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-memory.md#chunk-2",
+          "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+          "score": 4.969494
+        },
+        {
+          "source": "runbook-memory.md#chunk-1",
+          "text": "# Container memory pressure",
+          "score": 1.547627
+        }
+      ]
+    },
+    {
+      "id": "paraphrase-1",
+      "category": "paraphrase",
+      "query": "How can I undo a release that increased errors?",
+      "expected_source": "runbook-rollback.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-rollback.md#chunk-2",
+          "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic.",
+          "score": 3.279657
+        }
+      ]
+    },
+    {
+      "id": "paraphrase-2",
+      "category": "paraphrase",
+      "query": "Which steps restore the last working version?",
+      "expected_source": "runbook-rollback.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-rollback.md#chunk-2",
+          "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic.",
+          "score": 2.425668
+        },
+        {
+          "source": "runbook-database.md#chunk-2",
+          "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+          "score": 1.150891
+        }
+      ]
+    },
+    {
+      "id": "paraphrase-3",
+      "category": "paraphrase",
+      "query": "What do I check when my pod gets terminated for using too much RAM?",
+      "expected_source": "runbook-memory.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-memory.md#chunk-2",
+          "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+          "score": 1.999857
+        },
+        {
+          "source": "runbook-database.md#chunk-2",
+          "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+          "score": 1.925559
+        }
+      ]
+    },
+    {
+      "id": "paraphrase-4",
+      "category": "paraphrase",
+      "query": "How should I investigate an OOMKilled workload?",
+      "expected_source": "runbook-memory.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-memory.md#chunk-2",
+          "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+          "score": 3.596023
+        }
+      ]
+    },
+    {
+      "id": "paraphrase-5",
+      "category": "paraphrase",
+      "query": "Why do database clients run out of available connections?",
+      "expected_source": "runbook-database.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-database.md#chunk-2",
+          "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+          "score": 1.925559
+        },
+        {
+          "source": "runbook-database.md#chunk-1",
+          "text": "# Database connection exhaustion",
+          "score": 1.547627
+        }
+      ]
+    },
+    {
+      "id": "paraphrase-6",
+      "category": "paraphrase",
+      "query": "How can I reduce application concurrency while queries are blocked?",
+      "expected_source": "runbook-database.md",
+      "rank": 1,
+      "results": [
+        {
+          "source": "runbook-database.md#chunk-2",
+          "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+          "score": 4.616566
+        }
+      ]
+    },
+    {
+      "id": "irrelevant-1",
+      "category": "irrelevant",
+      "query": "weather forecast tomorrow",
+      "expected_source": null,
+      "rank": null,
+      "results": []
+    },
+    {
+      "id": "irrelevant-2",
+      "category": "irrelevant",
+      "query": "recipe for chocolate cake",
+      "expected_source": null,
+      "rank": null,
+      "results": [
+        {
+          "source": "runbook-memory.md#chunk-2",
+          "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+          "score": 1.198674
+        }
+      ]
+    },
+    {
+      "id": "irrelevant-3",
+      "category": "irrelevant",
+      "query": "passport renewal appointment",
+      "expected_source": null,
+      "rank": null,
+      "results": []
+    },
+    {
+      "id": "irrelevant-4",
+      "category": "irrelevant",
+      "query": "How do I install a memory card in a camera?",
+      "expected_source": null,
+      "rank": null,
+      "results": [
+        {
+          "source": "runbook-memory.md#chunk-1",
+          "text": "# Container memory pressure",
+          "score": 1.547627
+        },
+        {
+          "source": "runbook-memory.md#chunk-2",
+          "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+          "score": 1.183695
+        },
+        {
+          "source": "runbook-rollback.md#chunk-2",
+          "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic.",
+          "score": 1.093219
+        }
+      ]
+    },
+    {
+      "id": "irrelevant-5",
+      "category": "irrelevant",
+      "query": "How do I release a song to streaming platforms?",
+      "expected_source": null,
+      "rank": null,
+      "results": [
+        {
+          "source": "runbook-rollback.md#chunk-2",
+          "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic.",
+          "score": 3.279657
+        }
+      ]
+    },
+    {
+      "id": "irrelevant-6",
+      "category": "irrelevant",
+      "query": "What database should I use for my new shopping application?",
+      "expected_source": null,
+      "rank": null,
+      "results": [
+        {
+          "source": "runbook-database.md#chunk-2",
+          "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+          "score": 1.925559
+        },
+        {
+          "source": "runbook-database.md#chunk-1",
+          "text": "# Database connection exhaustion",
+          "score": 1.547627
+        },
+        {
+          "source": "runbook-memory.md#chunk-2",
+          "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+          "score": 1.198674
+        }
+      ]
+    }
+  ]
+}

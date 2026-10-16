@@ -1,51 +1,29 @@
 # Validation
 
-## Python and HTTP tests
+## Challenge evaluation update October 16 2026
 
-```text
-test_blank_query_rejected (test_app.HttpTests) ... ok
-test_dataset_is_generated_from_repository_fixtures (test_app.HttpTests) ... ok
-test_demo_html (test_app.HttpTests) ... ok
-test_health (test_app.HttpTests) ... ok
-test_invalid_limits (test_app.HttpTests) ... ok
-test_long_query_rejected (test_app.HttpTests) ... ok
-test_no_match_is_successful_empty_result (test_app.HttpTests) ... ok
-test_private_paths_not_served (test_app.HttpTests) ... ok
-test_search_returns_source (test_app.HttpTests) ... ok
-test_empty_directory_is_valid (test_search.SearchTests) ... ok
-test_empty_evaluation_rejected (test_search.SearchTests) ... ok
-test_empty_index (test_search.SearchTests) ... ok
-test_empty_query (test_search.SearchTests) ... ok
-test_file_is_not_a_docs_directory (test_search.SearchTests) ... ok
-test_limit (test_search.SearchTests) ... ok
-test_metrics (test_search.SearchTests) ... ok
-test_missing_directory_is_rejected (test_search.SearchTests) ... ok
-test_relevant_runbook_is_first (test_search.SearchTests) ... ok
-test_tie_breaking_is_deterministic (test_search.SearchTests) ... ok
-test_unknown_query_has_no_results (test_search.SearchTests) ... ok
+Commands run successfully:
 
-----------------------------------------------------------------------
-Ran 20 tests in 0.551s
-
-OK
+```sh
+python3 -m unittest -v
+node web.test.cjs
+python3 evaluate_challenge.py
 ```
 
-## Browser retrieval tests
+- 28 Python tests passed, including nine real HTTP tests and eight tests for the challenge evaluator.
+- Eight JavaScript retrieval assertions and 18 Python/JavaScript parity cases passed.
+- The challenge report contains 18 queries: six baseline, six paraphrased, and six irrelevant.
+- Baseline and paraphrase groups each returned the expected source for all six cases, with hit rate at three 1.0 and MRR at three 1.0.
+- Four of six irrelevant queries returned results, a false-positive rate of 0.667. Two returned no results, a correct-abstention rate of 0.333.
 
-```text
-8 browser retrieval assertions and 6 Python/JavaScript parity cases passed.
-```
+`evaluation-results.json` records every case and result. Its values are observations of the included synthetic fixtures, not general accuracy estimates. The evaluator rejects missing relevance labels, duplicate case identifiers, and source labels that do not exist in the index. Metrics without applicable cases are null.
 
-## Browser checks
+This change does not alter the retrieval algorithm or the browser interface. It strengthens evaluation and exposes failures caused by lexical overlap.
 
-The local interface loaded six chunks from three synthetic runbooks. The Memory pressure example returned the runbook-memory.md source and its passage. An unmatched query returned the no-matching-passages message with no result cards.
+## Public demo verification
 
-The local API tests make real HTTP requests on an ephemeral loopback port. The static UI is tested separately; the public Pages deployment does not run the Python API. Scores and results are fixture checks, not evidence of production retrieval quality.
+GitHub Pages: https://vasavikosaraju1.github.io/runbook-search/
 
-## Public deployment verified October 16 2026
+The HTTPS page loaded six chunks from three synthetic runbooks. Memory pressure returned runbook-memory.md references, database connections returned runbook-database.md references, and an unmatched query displayed the no-results state with no result cards.
 
-GitHub Pages deployment completed successfully from main. Public URL: https://vasavikosaraju1.github.io/runbook-search/
-
-Verified the HTTPS page loaded six chunks from the three synthetic runbooks. Memory pressure returned runbook-memory.md references, database connections returned runbook-database.md references, and an unmatched query displayed the no-results state with no result cards. The pull request passed all six GitHub checks before merging.
-
-The public site is static; the Python API and health endpoint remain local development features.
+The public site is static. The Python API and health endpoint remain local development features. No private documents or model API calls are used.
