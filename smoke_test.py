@@ -1,8 +1,9 @@
 """Exercise a running deployment; nonzero exit on failed readiness or API checks."""
 import argparse
 import json
+from http.client import HTTPException
 import time
-from urllib.error import HTTPError, URLError
+from urllib.error import HTTPError
 from urllib.parse import urlsplit
 from urllib.request import urlopen
 
@@ -18,7 +19,7 @@ def verify(base):
                 health = json.load(response)
             if health.get('status') == 'ok' and health.get('chunks', 0) > 0:
                 break
-        except (URLError, TimeoutError):
+        except (OSError, HTTPException):
             pass
         time.sleep(2)
     else:

@@ -31,7 +31,7 @@ The public site is static. The Python API and health endpoint remain local devel
 
 ## Container and Azure lab — October 16, 2026
 
-- 36 Python tests pass locally (28 existing plus 8 WSGI contract, health, validation, private-path, metrics/log privacy, asset and error-handling tests).
+- 40 Python tests pass locally (28 existing, 8 WSGI checks and 4 deployment-smoke regression checks). The smoke checks cover startup connection resets, bounded retries, private-path exposure and missing retrieval results.
 - Gunicorn 26.2.0 serves the WSGI application locally; the HTTP smoke script passes readiness, source retrieval, metrics and private-path checks.
 - 8 browser assertions and 18 Python/JavaScript parity cases pass.
 - Both Bicep templates compile with the official Microsoft Bicep CLI, without Azure authentication or provisioning.
