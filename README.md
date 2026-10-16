@@ -1,5 +1,7 @@
 # Runbook Search
 
+[Try the live browser demo](https://vasavikosaraju1.github.io/runbook-search/) · [Source and tests](https://github.com/VasaviKosaraju1/runbook-search)
+
 Search operational notes through a local CLI, a browser demo, or a local HTTP API.
 
 This is a small, dependency-free retrieval baseline for Markdown runbooks. It ranks paragraph-sized chunks with BM25 and returns the source filename and chunk number alongside the text. It is useful for checking whether a document collection can answer common operational questions before adding embeddings or generated answers.

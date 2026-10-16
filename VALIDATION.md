@@ -41,3 +41,11 @@ OK
 The local interface loaded six chunks from three synthetic runbooks. The Memory pressure example returned the runbook-memory.md source and its passage. An unmatched query returned the no-matching-passages message with no result cards.
 
 The local API tests make real HTTP requests on an ephemeral loopback port. The static UI is tested separately; the public Pages deployment does not run the Python API. Scores and results are fixture checks, not evidence of production retrieval quality.
+
+## Public deployment verified October 16 2026
+
+GitHub Pages deployment completed successfully from main. Public URL: https://vasavikosaraju1.github.io/runbook-search/
+
+Verified the HTTPS page loaded six chunks from the three synthetic runbooks. Memory pressure returned runbook-memory.md references, database connections returned runbook-database.md references, and an unmatched query displayed the no-results state with no result cards. The pull request passed all six GitHub checks before merging.
+
+The public site is static; the Python API and health endpoint remain local development features.
