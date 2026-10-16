@@ -1,0 +1,17 @@
+// Azure Log Analytics: select the workspace created by main.bicep.
+// Console schema when appLogsConfiguration.destination = log-analytics.
+ContainerAppConsoleLogs_CL
+| where TimeGenerated > ago(1h)
+| where ContainerAppName_s == "runbook-search"
+| extend request = parse_json(Log_s)
+| where tostring(request.event) == "http_request"
+| extend route = tostring(request.route), status = toint(request.status), duration = todouble(request.duration_ms)
+| summarize requests=count(), errors=countif(status >= 500), p95_ms=percentile(duration, 95) by bin(TimeGenerated, 5m), route
+| extend error_rate = todouble(errors) / requests
+| order by TimeGenerated desc
+
+// Run separately: platform provisioning, startup and revision failures.
+ContainerAppSystemLogs_CL
+| where TimeGenerated > ago(1h) and ContainerAppName_s == "runbook-search"
+| project TimeGenerated, RevisionName_s, Log_s
+| order by TimeGenerated desc

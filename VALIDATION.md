@@ -27,3 +27,13 @@ GitHub Pages: https://vasavikosaraju1.github.io/runbook-search/
 The HTTPS page loaded six chunks from three synthetic runbooks. Memory pressure returned runbook-memory.md references, database connections returned runbook-database.md references, and an unmatched query displayed the no-results state with no result cards.
 
 The public site is static. The Python API and health endpoint remain local development features. No private documents or model API calls are used.
+
+
+## Container and Azure lab — October 16, 2026
+
+- 36 Python tests pass locally (28 existing plus 8 WSGI contract, health, validation, private-path, metrics/log privacy, asset and error-handling tests).
+- Gunicorn 26.2.0 serves the WSGI application locally; the HTTP smoke script passes readiness, source retrieval, metrics and private-path checks.
+- 8 browser assertions and 18 Python/JavaScript parity cases pass.
+- Both Bicep templates compile with the official Microsoft Bicep CLI, without Azure authentication or provisioning.
+- GitHub Actions adds container build/non-root/read-only smoke checks and infrastructure compilation. Consult the PR checks for the observed remote result. Docker is unavailable on the local workstation.
+- Azure deployment, OIDC/RBAC configuration, platform log queries, alerts and rollback have **not** been exercised in a subscription. The GitHub Pages demo is independent of this API/container target.

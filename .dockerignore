@@ -1,0 +1,9 @@
+**
+!Dockerfile
+!requirements.txt
+!cloud_app.py
+!search.py
+!index.html
+!web.js
+!runbooks.json
+!runbook-*.md
