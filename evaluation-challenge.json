@@ -1,0 +1,110 @@
+[
+  {
+    "id": "baseline-1",
+    "category": "baseline",
+    "query": "deployment rollback healthy revision",
+    "expected_source": "runbook-rollback.md"
+  },
+  {
+    "id": "baseline-2",
+    "category": "baseline",
+    "query": "OOMKilled memory limit",
+    "expected_source": "runbook-memory.md"
+  },
+  {
+    "id": "baseline-3",
+    "category": "baseline",
+    "query": "connection pool exhausted",
+    "expected_source": "runbook-database.md"
+  },
+  {
+    "id": "baseline-4",
+    "category": "baseline",
+    "query": "long running queries",
+    "expected_source": "runbook-database.md"
+  },
+  {
+    "id": "baseline-5",
+    "category": "baseline",
+    "query": "pause rollout error rates",
+    "expected_source": "runbook-rollback.md"
+  },
+  {
+    "id": "baseline-6",
+    "category": "baseline",
+    "query": "container leaks peak usage",
+    "expected_source": "runbook-memory.md"
+  },
+  {
+    "id": "paraphrase-1",
+    "category": "paraphrase",
+    "query": "How can I undo a release that increased errors?",
+    "expected_source": "runbook-rollback.md"
+  },
+  {
+    "id": "paraphrase-2",
+    "category": "paraphrase",
+    "query": "Which steps restore the last working version?",
+    "expected_source": "runbook-rollback.md"
+  },
+  {
+    "id": "paraphrase-3",
+    "category": "paraphrase",
+    "query": "What do I check when my pod gets terminated for using too much RAM?",
+    "expected_source": "runbook-memory.md"
+  },
+  {
+    "id": "paraphrase-4",
+    "category": "paraphrase",
+    "query": "How should I investigate an OOMKilled workload?",
+    "expected_source": "runbook-memory.md"
+  },
+  {
+    "id": "paraphrase-5",
+    "category": "paraphrase",
+    "query": "Why do database clients run out of available connections?",
+    "expected_source": "runbook-database.md"
+  },
+  {
+    "id": "paraphrase-6",
+    "category": "paraphrase",
+    "query": "How can I reduce application concurrency while queries are blocked?",
+    "expected_source": "runbook-database.md"
+  },
+  {
+    "id": "irrelevant-1",
+    "category": "irrelevant",
+    "query": "weather forecast tomorrow",
+    "expected_source": null
+  },
+  {
+    "id": "irrelevant-2",
+    "category": "irrelevant",
+    "query": "recipe for chocolate cake",
+    "expected_source": null
+  },
+  {
+    "id": "irrelevant-3",
+    "category": "irrelevant",
+    "query": "passport renewal appointment",
+    "expected_source": null
+  },
+  {
+    "id": "irrelevant-4",
+    "category": "irrelevant",
+    "query": "How do I install a memory card in a camera?",
+    "expected_source": null
+  },
+  {
+    "id": "irrelevant-5",
+    "category": "irrelevant",
+    "query": "How do I release a song to streaming platforms?",
+    "expected_source": null
+  },
+  {
+    "id": "irrelevant-6",
+    "category": "irrelevant",
+    "query": "What database should I use for my new shopping application?",
+    "expected_source": null
+  }
+]

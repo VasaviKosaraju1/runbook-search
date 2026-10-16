@@ -50,7 +50,7 @@ Requires Node.js 22 or newer for the test command only; the published demo runs 
 node web.test.cjs
 ```
 
-The checks cover tokenization, relevant results, unmatched and blank queries, invalid limits, deterministic ties, and six golden comparisons against Python. `browser-parity.json` contains fixed expected results; update it deliberately when ranking behavior changes.
+The checks cover tokenization, relevant results, unmatched and blank queries, invalid limits, deterministic ties, and 18 golden comparisons against Python. `browser-parity.json` contains fixed expected results; update it deliberately when ranking behavior changes.
 
 ## How it works
 
@@ -69,7 +69,26 @@ The index reads `runbook-*.md` files from the current directory, or a directory 
 
 `evaluation.json` contains six hand-written queries over three synthetic runbooks. The evaluation reports hit rate and mean reciprocal rank at three. A hit means that a returned chunk comes from the expected file. Run the command above to reproduce the figures in [VALIDATION.md](VALIDATION.md).
 
-This is a smoke-test corpus, not evidence of general retrieval quality. The queries closely match the sample vocabulary. A useful next evaluation would include paraphrases, ambiguous questions, and irrelevant documents, with a separate held-out query set.
+### Challenge evaluation
+
+```sh
+python3 evaluate_challenge.py
+python3 evaluate_challenge.py > evaluation-results.json
+```
+
+`evaluation-challenge.json` adds explicit case identifiers, categories, and relevance labels. It includes the original six queries, six paraphrased questions, and six irrelevant questions. Irrelevant cases use `expected_source: null`; missing labels are rejected rather than treated as no-answer cases. The report includes per-query rankings and category-level metrics. Unknown source labels and duplicate case identifiers are rejected.
+
+| Category | Cases | Hit rate at 3 | MRR at 3 | Correct no-results responses |
+| --- | ---: | ---: | ---: | ---: |
+| Baseline | 6 | 1.00 | 1.00 | Not applicable |
+| Paraphrase | 6 | 1.00 | 1.00 | Not applicable |
+| Irrelevant | 6 | Not applicable | Not applicable | 2 of 6 |
+
+The baseline incorrectly returns results for **4 of 6 irrelevant queries**. Some unrelated questions share ordinary words with the runbooks, so lexical overlap alone does not establish that a passage answers the question. The challenge set exposes this behavior without changing the ranking algorithm or hiding failures. See [evaluation-results.json](evaluation-results.json) for all queries and returned passages.
+
+Positive-query metrics are calculated only over cases with a relevant source. The irrelevant-query false-positive rate counts any returned passage for an irrelevant case; correct abstention means returning no passages. A metric with no applicable cases is reported as null, not zero.
+
+This is a small, manually authored challenge set over three synthetic runbooks. It is not a blind held-out benchmark and does not establish general retrieval quality. File-level hits can also be easier than passage-level relevance judgments. A larger independent query set, more documents, and human passage-level labels are needed before making broader claims.
 
 ## Decisions and limitations
 
