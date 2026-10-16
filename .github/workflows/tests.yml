@@ -13,4 +13,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python build_demo.py
       - run: python -m unittest -v
+      - run: node web.test.cjs
+      - run: git diff --exit-code -- runbooks.json

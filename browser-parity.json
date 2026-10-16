@@ -1,0 +1,75 @@
+[
+  {
+    "query": "OOMKilled memory limit",
+    "results": [
+      {
+        "source": "runbook-memory.md#chunk-2",
+        "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+        "score": 3.581044
+      },
+      {
+        "source": "runbook-memory.md#chunk-1",
+        "text": "# Container memory pressure",
+        "score": 1.547627
+      }
+    ]
+  },
+  {
+    "query": "deployment rollback healthy revision",
+    "results": [
+      {
+        "source": "runbook-rollback.md#chunk-1",
+        "text": "# Deployment rollback",
+        "score": 4.012617
+      },
+      {
+        "source": "runbook-rollback.md#chunk-2",
+        "text": "If a deployment increases error rates, pause the rollout. Compare the release identifier with the last healthy revision. Roll back to that revision, then verify readiness and request error rates before resuming traffic.",
+        "score": 3.477077
+      }
+    ]
+  },
+  {
+    "query": "connection pool exhausted",
+    "results": [
+      {
+        "source": "runbook-database.md#chunk-2",
+        "text": "When the connection pool is exhausted, inspect active connections and long-running queries. Reduce excessive client concurrency, check pool timeouts, and verify the database connection budget before scaling application replicas.",
+        "score": 4.026916
+      },
+      {
+        "source": "runbook-database.md#chunk-1",
+        "text": "# Database connection exhaustion",
+        "score": 1.547627
+      }
+    ]
+  },
+  {
+    "query": "memory deployment",
+    "results": [
+      {
+        "source": "runbook-rollback.md#chunk-1",
+        "text": "# Deployment rollback",
+        "score": 1.607535
+      },
+      {
+        "source": "runbook-memory.md#chunk-1",
+        "text": "# Container memory pressure",
+        "score": 1.547627
+      },
+      {
+        "source": "runbook-memory.md#chunk-2",
+        "text": "An OOMKilled container exceeded its memory limit. Inspect memory usage and recent workload changes. Check for leaks before increasing limits. Compare requests and limits with observed peak usage.",
+        "score": 1.183695
+      }
+    ]
+  },
+  {
+    "query": "unknownzzzz",
+    "results": []
+  },
+  {
+    "query": "",
+    "results": []
+  }
+]

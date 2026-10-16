@@ -1,6 +1,6 @@
 # Runbook Search
 
-Find relevant operational notes before reaching for a language model.
+Search operational notes through a local CLI, a browser demo, or a local HTTP API.
 
 This is a small, dependency-free retrieval baseline for Markdown runbooks. It ranks paragraph-sized chunks with BM25 and returns the source filename and chunk number alongside the text. It is useful for checking whether a document collection can answer common operational questions before adding embeddings or generated answers.
 
@@ -17,6 +17,38 @@ python3 -m unittest -v
 A nonexistent document directory is rejected with exit status 2 and a JSON error on stderr. An existing empty directory is valid and returns no results.
 
 The first query returns the memory-pressure runbook. An unknown term returns an empty list rather than an invented answer.
+
+## Browser demo and local API
+
+```sh
+python3 build_demo.py
+python3 app.py
+```
+
+Open `http://127.0.0.1:8000`. The interface loads the checked-in synthetic dataset and performs BM25 search in the browser. No model calls or user document uploads are involved.
+
+The local server also provides:
+
+- `GET /health`: reports service readiness and indexed chunk count.
+- `GET /api/search?q=memory&limit=3`: returns ranked passages as JSON.
+- Invalid or empty queries and invalid limits return HTTP 400.
+- Unmatched queries return HTTP 200 with an empty result list.
+
+The server binds to loopback by default, suppresses request logs, and serves only the demo assets. It is a development server, not a production deployment target. The browser UI uses the JavaScript index; the local API uses the Python index. Golden cases verify consistent ranking and scores between the two implementations.
+
+### Static deployment
+
+The static demo consists of `index.html`, `web.js`, and `runbooks.json`. GitHub Pages can publish it directly from `main` at the repository root. The Python API and `/health` endpoint run locally; GitHub Pages does not execute Python. Rebuild `runbooks.json` after changing the synthetic runbooks and include that generated file in the commit.
+
+### Browser retrieval checks
+
+Requires Node.js 22 or newer for the test command only; the published demo runs in a modern browser without Node.
+
+```sh
+node web.test.cjs
+```
+
+The checks cover tokenization, relevant results, unmatched and blank queries, invalid limits, deterministic ties, and six golden comparisons against Python. `browser-parity.json` contains fixed expected results; update it deliberately when ranking behavior changes.
 
 ## How it works
 
@@ -42,7 +74,7 @@ This is a smoke-test corpus, not evidence of general retrieval quality. The quer
 - BM25 makes the baseline easy to inspect and run offline. It does not understand synonyms or infer meaning.
 - Source references identify local files and chunk numbers, not permanent line anchors. Editing a file can change chunk numbers.
 - The index is rebuilt in memory for each invocation. Large collections need persistence and incremental indexing.
-- There is no generative model, web service, authentication, or production deployment in this version.
+- There is no generative model or authentication. The browser demo is static, and the Python HTTP API is for local development. Neither should be used to publish private runbooks.
 - Sample runbooks are fictional learning fixtures. Check actual operational procedures before using them.
 
 ## Files worth reading
